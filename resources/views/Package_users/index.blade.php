@@ -1,45 +1,33 @@
 @extends('Layouts.app')
 @section('content')
 <div class="w-full overflow-hidden rounded-lg shadow-xs">
-  <div><a href="{{ route('user_details.create') }}" class="add-user btn btn-primary  float-sm-right">Add Details</a></div>
+  <div><a href="{{ route('package_user.create') }}" class="add-user btn btn-primary  float-sm-right">Add Package_user</a></div>
               <div class="w-full overflow-x-auto">
                 <table class="w-full whitespace-no-wrap">
                   <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                      <th class="px-4 py-3">SL_Id.</th>
-                      <th class="px-4 py-3">User id</th>
-                      <th class="px-4 py-3">address</th>
-                      <th class="px-4 py-3">city</th>
-                      <th class="px-4 py-3">location</th>
-                      <th class="px-4 py-3">description</th>
-                      <th class="px-4 py-3">Action</th>
+                      <th class="px-4 py-3">User Id</th>
+                      <th class="px-4 py-3">Package Id</th>
                     </tr>
                   </thead>
-                  @foreach ($user_details as $key=>$row )
+                  @foreach ($users as $user )
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3 text-sm">
-                        {{ $row->id }}
-                      </td>
-                      <td class="px-4 py-3 text-sm">
-                        {{ $row->user_id }}
+                        {{ $user->user_id }}
                         </td>
+                        <td class="px-4 py-3 text-sm">
+                            {{ $user->package_id }}
+                            </td>
                       <td class="px-4 py-3 text-sm">
-                        {{ $row->address }}
-                      </td>
-                      <td class="px-4 py-3 text-xs">
-                        {{ $row->city }}
-                      </td>
-                      <td class="px-4 py-3 text-sm">
-                        {{ $row->location }}
-                      </td>
-                      <td class="px-4 py-3 text-sm ">
-                        <textarea name="" id="" cols="20" rows="2">{{ $row->description }}</textarea>
+                        {{--  @foreach ($users->packages as $package  )
+                        {{ $package->package_name }}
+                        @endforeach  --}}
                       </td>
                       <td class="px-4 py-3 text-sm">
                     <div class="form-group">
-                              <a href="{{ route('user_details.show',$row->id) }}" class="badge btn btn-sm btn-primary">Show</a>
-                        <form action="{{ route('user_details.destroy', $row->id) }}" method="POST">
+                              {{--  <a href="{{ route('package_user.show',$user->id) }}" class="badge btn btn-sm btn-primary">Show</a>  --}}
+                        <form action="{{ route('package_user.destroy', $user->id) }}" method="POST">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="badge btn btn-sm btn-danger">delete</button>

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\UserDetail;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
-class UserDetailsController extends Controller
+class PackageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class UserDetailsController extends Controller
      */
     public function index()
     {
-
-        $user_details = UserDetail::all();
-        return view('user_details.index', compact('user_details'));
+        $packages = Package::all();
+        return view('packages.index',compact('packages'));
     }
 
     /**
@@ -27,8 +25,7 @@ class UserDetailsController extends Controller
      */
     public function create()
     {
-        $user = User::get();
-        return view('user_details.create',compact('user'));
+        return view('packages.create');
     }
 
     /**
@@ -39,21 +36,11 @@ class UserDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email'=> 'required',
-        //     'username'=> 'required',
-        //     'phone'=> 'required',
-        // ]);
         $data = [
-            'user_id'=>$request->user_id,
-            'address'=>$request->address,
-            'city'=>$request->city,
-            'location'=>$request->location,
-            'description'=>$request->description,
+            'package_name'=>$request->package_name,
         ];
-       $user_details = UserDetail::insert($data);
-        return redirect()->route('user_details.index');
+       $packages = Package::insert($data);
+        return redirect()->route('packages.index');
     }
 
     /**
@@ -64,8 +51,7 @@ class UserDetailsController extends Controller
      */
     public function show($id)
     {
-        $user_details = UserDetail::where('id',$id)->first();
-        return view('user_details.show', compact('user_details'));
+
     }
 
     /**
@@ -99,10 +85,7 @@ class UserDetailsController extends Controller
      */
     public function destroy($id)
     {
-        
-            $user_details = UserDetail::where('id', $id)->delete();
+        $packages = Package::where('id', $id)->delete();
             return redirect()->back();
-
-
     }
 }

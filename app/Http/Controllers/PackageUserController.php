@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Package;
+use App\Models\Package_User;
 use App\Models\User;
-use App\Models\UserDetail;
 use Illuminate\Http\Request;
 
-class UserDetailsController extends Controller
+class PackageUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,8 @@ class UserDetailsController extends Controller
      */
     public function index()
     {
-
-        $user_details = UserDetail::all();
-        return view('user_details.index', compact('user_details'));
+        $users =Package_User::all();
+        return view('Package_users.index' , compact('users'));
     }
 
     /**
@@ -27,8 +27,9 @@ class UserDetailsController extends Controller
      */
     public function create()
     {
-        $user = User::get();
-        return view('user_details.create',compact('user'));
+        $users = User::get();
+        $packages = Package::get();
+        return view("Package_users.create",compact('users', 'packages'));
     }
 
     /**
@@ -39,21 +40,12 @@ class UserDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email'=> 'required',
-        //     'username'=> 'required',
-        //     'phone'=> 'required',
-        // ]);
         $data = [
             'user_id'=>$request->user_id,
-            'address'=>$request->address,
-            'city'=>$request->city,
-            'location'=>$request->location,
-            'description'=>$request->description,
+            'package_id'=>$request->package_id,
         ];
-       $user_details = UserDetail::insert($data);
-        return redirect()->route('user_details.index');
+       $package_user = Package_User::insert($data);
+        return redirect()->route('package_user.index');
     }
 
     /**
@@ -64,8 +56,7 @@ class UserDetailsController extends Controller
      */
     public function show($id)
     {
-        $user_details = UserDetail::where('id',$id)->first();
-        return view('user_details.show', compact('user_details'));
+        //
     }
 
     /**
@@ -99,10 +90,8 @@ class UserDetailsController extends Controller
      */
     public function destroy($id)
     {
-        
-            $user_details = UserDetail::where('id', $id)->delete();
+        $package_user = Package_User::where('id', $id)->delete();
             return redirect()->back();
-
 
     }
 }
